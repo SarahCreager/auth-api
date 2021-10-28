@@ -5,7 +5,8 @@ const router = express.Router();
 
 const dataModules = require('../models');
 
-
+const acl = require('../middleware/acl.js');
+const bearerAuth = require('../middleware/bearer');
 
 router.param('model', (req, res, next) => {
   const modelName = req.params.model;
@@ -17,11 +18,11 @@ router.param('model', (req, res, next) => {
   }
 });
 
-router.get('/:model', handleGetAll);
-router.get('/:model/:id', handleGetOne);
-router.post('/:model', handleCreate);
-router.put('/:model/:id', handleUpdate);
-router.delete('/:model/:id', handleDelete);
+router.get('/:model', bearerAuth, acl('read'), handleGetAll);
+router.get('/:model/:id', bearerAuth, acl('read'), handleGetOne);
+router.post('/:model', bearerAuth, acl('create'), handleCreate);
+router.put('/:model/:id', bearerAuth, acl('update'), handleUpdate);
+router.delete('/:model/:id', bearerAuth, acl('delete'), handleDelete);
 
 async function handleGetAll(req, res) {
   let allRecords = await req.model.get();
@@ -30,7 +31,7 @@ async function handleGetAll(req, res) {
 
 async function handleGetOne(req, res) {
   const id = req.params.id;
-  let theRecord = await req.model.get(id);
+  let theRecord = await req.model.get(id)
   res.status(200).json(theRecord);
 }
 
@@ -43,7 +44,7 @@ async function handleCreate(req, res) {
 async function handleUpdate(req, res) {
   const id = req.params.id;
   const obj = req.body;
-  let updatedRecord = await req.model.update(id, obj);
+  let updatedRecord = await req.model.update(id, obj)
   res.status(200).json(updatedRecord);
 }
 
@@ -52,6 +53,5 @@ async function handleDelete(req, res) {
   await req.model.delete(id);
   res.status(200).json({});
 }
-
 
 module.exports = router;
