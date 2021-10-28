@@ -9,19 +9,30 @@ Created by Sarah Creager
 ``` 
 PORT=3001
 
-DATABASE_URL=
+SECRETL=
 ```
 
 ## Dependencies
- 
-
+ * eslint
+ * express
+ * jest
+ * method-override
+ * pg
+ * sequelize
+ * sequelize-cli
+ * sqlite3
+ * base-64
+ * bcrypt
+ * cors
+ * dotenv
+ * jsonwebtoken
+ * morgan
+ * supertest
 
 ## Summary of Problem Domain
-Built basic auth server that allows authentication with username and password and authorization with JWT.
+Built basic auth server that allows RESTful CRUD, authentication with username and password and authorization with JWT.
 
 ## Links to application deployment
-
-[Deployed Heroku Application]()
 
 [GitHub](https://github.com/SarahCreager/auth-api.git)
 
@@ -29,5 +40,5 @@ Built basic auth server that allows authentication with username and password an
 
 ![UML](./img/UML.png)
 
-## Routes
+
 
